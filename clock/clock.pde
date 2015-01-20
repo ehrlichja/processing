@@ -1,7 +1,7 @@
 import com.onformative.yahooweather.*;
 
 YahooWeather weather;
-int updateIntervallMillis = 60000*60*24; 
+int updateIntervallMillis = 60000*60; 
 
 float sunrise;
 float sunset;
@@ -11,10 +11,10 @@ color hoursColor;
 color minutesColor;
 color secondsColor;
 
-int timeStroke=10;
+int timeStroke=20;
 
 void setup() {
- size(320, 240);
+ size(800, 480);
  weather = new YahooWeather(this, 2487956, "c", updateIntervallMillis);
 }
 
@@ -32,9 +32,23 @@ void setTheme2() {
   secondsColor = color(155, 191, 171);
 }
 
+void setTheme3() {
+  daylightColor = color(255, 153, 0, 0.7*255);
+  hoursColor = color(153, 153, 255);
+  minutesColor = color(204, 102, 102);
+  secondsColor = color(255, 204, 153);
+}
+
+void setTheme4() {
+  daylightColor = color(208, 168, 37, 0.7*255);
+  hoursColor = color(64, 68, 124);
+  minutesColor = color(38, 57, 61);
+  secondsColor = color(255, 250, 228);
+}
+
 void draw() {
   
-  setTheme1();
+  setTheme4();
   
   sunrise = setSunrise();
   sunset = setSunset();
@@ -46,7 +60,7 @@ void draw() {
   // Daylight
   noStroke();
   fill(daylightColor);
-  arc(width/2, height/2, (width/8)*3, (width/8)*3, radians(-90+(15*sunrise)), radians(-90+(15*sunset)), PIE);
+  arc(width/2, height/2, (width/8)*2, (width/8)*2, radians(-90+(15*sunrise)), radians(-90+(15*sunset)), PIE);
   
   noFill();
   strokeWeight(timeStroke);
@@ -55,16 +69,18 @@ void draw() {
   // HOURS
   stroke(hoursColor);
   float hour = hour() + minute()/60.0;
-  arc(width/2, height/2, (width/8)*3, (width/8)*3, radians(-90), radians(-90+(15*hour)));   
+  arc(width/2, height/2, (width/8)*2, (width/8)*2, radians(-90), radians(-90+(15*hour)));   
 
   // MINUTES
   stroke(minutesColor);
   float minute = minute() + second()/60.0;
-  arc(width/2, height/2, (width/8)*4, (width/8)*4, radians(-90), radians(-90+(6*minute) ) );   
+  arc(width/2, height/2, (width/8)*3, (width/8)*3, radians(-90), radians(-90+(6*minute) ) );   
 
   // SECONDS
   stroke(secondsColor);
-  arc(width/2, height/2, (width/8)*5, (width/8)*5, radians(-90), radians(-90+(6*second()))); 
+  arc(width/2, height/2, (width/8)*4, (width/8)*4, radians(-90), radians(-90+(6*second()))); 
+
+//  text("★", width*0.9, height*0.9, width*0.95, height*0.95);
 
 }
 
@@ -79,13 +95,13 @@ void gridLines() {
  
  noStroke();
  fill(0);
- ellipse(width/2, height/2, ((width/8)*3)+60, ((width/8)*3)+60);
+ ellipse(width/2, height/2, ((width/8)*3)+45, ((width/8)*3)+45);
  
  stroke(255, 255, 255, 0.1*255);
  strokeWeight(1);
  noFill();
  for (int i=0; i<24; i++) {
-   arc(width/2, height/2, ((width/8)*3)+60, ((width/8)*3)+60, radians(15*i), radians((15*i)+15), PIE);
+   arc(width/2, height/2, ((width/8)*3)+45, ((width/8)*3)+45, radians(15*i), radians((15*i)+15), PIE);
  }
  
 }
