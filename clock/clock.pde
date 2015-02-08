@@ -36,7 +36,7 @@ void drawTime() {
   
   sunrise = setSunrise();
   sunset = setSunset();
-  setTheme4();
+  setTheme3();
   background(0);
   gridLines();
   // Daylight
