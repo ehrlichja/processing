@@ -1,3 +1,6 @@
+int nodeWidth = 10;
+int nodeHeight = 10;
+
 void setup() {
   size (600, 600);
   
@@ -6,7 +9,7 @@ void setup() {
   fill(255);
   
   Node[] graph = generateGraph(int(random(2, 10)));
-  traverseGraph(graph);
+  traverseGraph(graph[0]);
 }
 
 Node[] generateGraph(int size) {
@@ -26,30 +29,18 @@ Node[] generateGraph(int size) {
   return graph;
 }
 
-void traverseGraph(Node[] graph) {
+void traverseGraph(Node root) {
   stroke(255, 0, 0);
   fill(255, 0, 0);
-  
-  Node current = graph[1];
-  
-  ellipse(current.x, current.y, current.nodeWidth, current.nodeHeight);
-  
-  println(current.linkCount);
-  
-  for (int j = 0; j < current.linkCount; j++) {
-      ellipse(current.links[j].x, current.links[j].y, current.nodeWidth, current.nodeHeight);
-  }
-  
-
-  
+    
+  ellipse(root.x, root.y, nodeWidth, nodeHeight);
+   
 }
 
 class Node {
   
   float x;
   float y;
-  int nodeWidth = 10;
-  int nodeHeight = 10;
   
   int linkCount = 0;
   Node[] links = new Node[1000];
@@ -68,6 +59,10 @@ class Node {
   
   void update() {
     ellipse(this.x, this.y, nodeWidth, nodeHeight);
+  }
+  
+  Node[] adj() {
+   return links; 
   }
   
 }
