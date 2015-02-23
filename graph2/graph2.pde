@@ -1,6 +1,10 @@
 int nodeWidth = 10;
 int nodeHeight = 10;
 Graph graph;
+Pair root = new Pair(100, 100);
+
+int time = second();
+
 
 void setup() {
   size (600, 600);
@@ -9,24 +13,25 @@ void setup() {
   stroke(255);
   fill(255);
   
-  graph = generateGraph(200);
 }
 
 void draw() {
   
-  Pair root = new Pair(100, 100);
+  if (second() != time) {
+    background(0);
+    graph = generateGraph(50, root);
+    dfs(graph, root);
+    time = second();  
+  }
   
-  ArrayList<Pair> adj = graph.adj().get(root);
   
-  dfs(graph, root);
+ 
 
-  noLoop();
 }
 
 void dfs(Graph graph, Pair node) {
 
   if (graph.adj(node) == null) return;
-      println("hi");
 
   for (Pair n : graph.adj(node)) {
     if (!n.marked) {
@@ -40,14 +45,21 @@ void dfs(Graph graph, Pair node) {
   
 }
 
-Graph generateGraph(int size) {
+Graph generateGraph(int size, Pair root) {
   Graph graph = new Graph(size);
+  ArrayList<Pair> pairs = new ArrayList();
+
   
-  graph.connect(100, 100, 200, 200);
-  graph.connect(200, 200, 400, 410);
-  graph.connect(400, 410, 100, 100);
-  graph.connect(327, 111, 200, 200);
-  graph.connect(522, 421, 100, 100);
+  pairs.add(root);
+  
+  for (int i=1; i<size; i++) {
+    pairs.add(new Pair(int(random(1, width)), int(random(1, height)))); 
+  }
+  
+  for (Pair pair : pairs) {
+    Pair target = pairs.get(int(random(1, pairs.size())));
+    graph.connect(pair.x, pair.y, target.x, target.y);
+  }
   
   return graph;
 }
